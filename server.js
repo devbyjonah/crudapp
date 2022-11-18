@@ -14,17 +14,24 @@ app.use(bodyParser.urlencoded({ extended: true }))
 MongoClient.connect(connectionString)
 	.then(client => {
 		console.log('connected to DB')
+		const db = client.db('crudApp')
+		const notesCol = db.collection('notes')
+
+		app.get('/', (req, res) => {
+			res.sendFile(__dirname + '/index.html')
+		})
+		
+		app.post('/notes', (req, res) => {
+			notesCol.insertOne(req.body)
+				.then(result => {
+					res.redirect('/')
+				})
+				.catch(error => console.error(error))
+		})
+		
+		app.listen(process.env.PORT || PORT, () => {
+			console.log(`The server is running on port ${PORT}`)
+		})
+		
 	})
 	.catch(error => console.error(error))
-
-app.get('/', (req, res) => {
-	res.sendFile(__dirname + '/index.html')
-})
-
-app.post('/notes', (req, res) => {
-	console.log(req.body)
-})
-
-app.listen(process.env.PORT || PORT, () => {
-	console.log(`The server is running on port ${PORT}`)
-})
