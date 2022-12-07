@@ -14,6 +14,7 @@ const connectionString = `mongodb+srv://${process.env.DB_USERNAME}:${process.env
 app.set('view engine', 'ejs') // set template engine to embedded javascript (set must come before any other app methods)
 
 app.use(bodyParser.urlencoded({ extended: true })) // setup middleware with app.use() method
+app.use(express.static('public')). // setup public folder to client side files
 
 // mongodb connection containing all of our server methods
 MongoClient.connect(connectionString)
