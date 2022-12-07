@@ -13,8 +13,10 @@ const connectionString = `mongodb+srv://${process.env.DB_USERNAME}:${process.env
 
 app.set('view engine', 'ejs') // set template engine to embedded javascript (set must come before any other app methods)
 
-app.use(bodyParser.urlencoded({ extended: true })) // setup middleware with app.use() method
-app.use(express.static('public')). // setup public folder to client side files
+// setup middleware with app.use() method
+app.use(bodyParser.urlencoded({ extended: true }))
+app.use(bodyParser.json()) // enable server to accept JSON data
+app.use(express.static('public')) // setup public folder for client side files
 
 // mongodb connection containing all of our server methods
 MongoClient.connect(connectionString)
@@ -37,6 +39,18 @@ MongoClient.connect(connectionString)
 					res.redirect('/')
 				})
 				.catch(error => console.error(error))
+		})
+
+		app.put('/notes', (req, res) => {
+			notesCol.findOneAndUpdate(
+				{ title:'test' },
+				{ 
+					$set: {
+						title: req.body.title,
+						quote: req.body.quote
+					} 
+				}
+			)
 		})
 		
 		app.listen(process.env.PORT || PORT, () => { // checks for node port using env variable, if none use local port
