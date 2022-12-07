@@ -11,6 +11,8 @@ const PORT = 8000
 // process.env variables used to hide private info
 const connectionString = `mongodb+srv://${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}@cluster0.uxd8j5d.mongodb.net/?retryWrites=true&w=majority`
 
+app.set('view engine', 'ejs') // set template engine to embedded javascript (set must come before any other app methods)
+
 app.use(bodyParser.urlencoded({ extended: true })) // setup middleware with app.use() method
 
 // mongodb connection containing all of our server methods
@@ -21,6 +23,12 @@ MongoClient.connect(connectionString)
 		const notesCol = db.collection('notes')
 
 		app.get('/', (req, res) => { // home page endpoint returns basic html file
+			db.collection('notes').find().toArray()
+				.then(results => {
+					console.log(results)
+				})
+				.catch(error => console.error(error))
+
 			res.sendFile(__dirname + '/index.html') // __dirname is an env variable from node w/ current directory
 		})
 		
