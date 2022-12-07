@@ -23,13 +23,11 @@ MongoClient.connect(connectionString)
 		const notesCol = db.collection('notes')
 
 		app.get('/', (req, res) => { // home page endpoint returns basic html file
-			db.collection('notes').find().toArray()
+			db.collection('notes').find().toArray() // retrieve notes from DB , convert to array of objects
 				.then(results => {
-					console.log(results)
+					res.render('index.ejs', { notes:results }) // res.render() express method to render template
 				})
 				.catch(error => console.error(error))
-
-			res.sendFile(__dirname + '/index.html') // __dirname is an env variable from node w/ current directory
 		})
 		
 		app.post('/notes', (req, res) => { // notes endpoint inserts user notes into DB
