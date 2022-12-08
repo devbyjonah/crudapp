@@ -59,14 +59,31 @@ MongoClient.connect(connectionString)
 
 		app.put('/notes', (req, res) => {
 			notesCol.findOneAndUpdate(
-				{ title:'test' },
+				{ title:'my json note' },
 				{ 
 					$set: {
 						title: req.body.title,
-						quote: req.body.quote
+						content: req.body.content
 					} 
+				},
+				{
+					upsert:true
 				}
 			)
+				.then(result => {
+					res.json('Success')
+				})
+				.catch(error => console.error(error))
+		})
+
+		app.delete('/notes', (req, res) => {
+			notesCol.deleteOne(
+				{ title:req.body.title }
+			)
+				.then(result => {
+					res.json(`deleted note`)
+				})
+				.catch(error => console.error(error))
 		})
 		
 		app.listen(process.env.PORT || PORT, () => { // checks for node port using env variable, if none use local port
