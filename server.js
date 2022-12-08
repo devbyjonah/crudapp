@@ -1,3 +1,19 @@
+
+/*
+	app methods:
+		- .set()			set method adds key/value pair to Map object
+							use method adds middleware to the app router
+		- .use()			get, post, and put methods follow the same format:
+							
+		- .get()			app.method('/endpoint', (request, response) => {
+								// process request, perform any actions, return response/redirect
+		- .post()			}
+					
+		- .put()			listen method replaces endpoint with the port and removes req and res parameters:
+
+		- .listen()			app.listen(process.env.PORT || PORT, () => { //callback function fired when server runs })
+*/
+
 // setup node packages
 const express = require('express') // streamlines creating web apps in node js
 const bodyParser = require('body-parser') // middleware for processing form input
