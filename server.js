@@ -18,7 +18,7 @@
 
 // setup node packages
 const express = require('express') // streamlines creating web apps in node js
-const bodyParser = require('body-parser') // middleware for processing form input
+// DEPRECATED - const bodyParser = require('body-parser') // middleware for processing form input
 const MongoClient = require('mongodb').MongoClient // mongodb client setup
 const dotenv = require('dotenv') //dotenv used to setup private env variables for DB connection
 dotenv.config()
@@ -32,8 +32,8 @@ const connectionString = `mongodb+srv://${process.env.DB_USERNAME}:${process.env
 app.set('view engine', 'ejs') // set template engine to embedded javascript (set must come before any other app methods)
 
 // setup middleware with app.use() method
-app.use(bodyParser.urlencoded({ extended: true }))
-app.use(bodyParser.json()) // enable server to accept JSON data
+app.use(express.urlencoded({ extended: true }))
+app.use(express.json()) // enable server to accept JSON data
 app.use(express.static('public')) // setup public folder for client side files
 
 // mongodb connection containing all of our server methods
