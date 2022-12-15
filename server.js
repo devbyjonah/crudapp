@@ -1,6 +1,6 @@
 
 /*
-	app methods:
+	express app methods:
 		- .set()			set method adds key/value pair to Map object
 							use method adds middleware to the app router
 		- .use() 			post(CREATE), get(READ), put(UPDATE), and delete(DELETE) methods follow the same format:
@@ -14,6 +14,18 @@
 		- .listen()			app.listen(process.env.PORT || PORT, () => { //callback function fired when server runs })
 
 		- .delete()
+	
+	mongoDB CRUD methods:
+		Create - insertOne() / insertMany() / 
+
+		Read - find() / findOne()
+
+		Update - updateOne() / updateMany()
+
+		Delete - deleteOne() and deleteMany()
+
+		Combos - findOneAndUpdate() / findOneAndReplace() / findOneAndDelete()
+
 */
 
 // setup node packages
